@@ -1,36 +1,32 @@
-package com.design.patterns.um.state.um.model.state;
+package com.design.patterns.um.state.um.service;
 
 import com.design.patterns.um.state.um.exception.OperacaoNaoPermitadaRuntimeException;
 import com.design.patterns.um.state.um.model.Orcamento;
 
-public class Reprovado extends EstadoOrcamento {
-
-    public Reprovado(Orcamento orcamento) {
-        super(orcamento);
-    }
+public class Finalizado implements EstadoCarrinho {
 
     @Override
-    public double aplicaDesconto() {
+    public void aplicaDesconto(CarrinhoService carrinhoService) {
         throw new OperacaoNaoPermitadaRuntimeException();
     }
 
     @Override
-    public void emAprovacao() {
+    public void emAprovacao(CarrinhoService carrinhoService) {
         throw new OperacaoNaoPermitadaRuntimeException();
     }
 
     @Override
-    public void aprovado() {
+    public void aprovado(CarrinhoService carrinhoService) {
         throw new OperacaoNaoPermitadaRuntimeException();
     }
 
     @Override
-    public void reprovado() {
+    public void reprovado(CarrinhoService carrinhoService) {
         throw new OperacaoNaoPermitadaRuntimeException();
     }
 
     @Override
-    public void finalizado() {
-        orcamento.setEstadoOrcamento(new Finalizado(orcamento));
+    public void finalizado(CarrinhoService carrinhoService) {
+        throw new OperacaoNaoPermitadaRuntimeException();
     }
 }
