@@ -5,14 +5,24 @@ import com.design.patterns.um.state.um.model.Orcamento;
 
 public class Aprovado implements EstadoCarrinho {
 
+    protected boolean descontoAplicado;
+
+    public Aprovado() {
+        this.descontoAplicado = false;
+    }
+
     @Override
     public void aplicaDesconto(CarrinhoService carrinhoService) {
+        if (descontoAplicado)
+            throw new OperacaoNaoPermitadaRuntimeException();
+
         Orcamento orcamento = carrinhoService.orcamento;
         double valorOrcamento = orcamento.getValor();
         double valorDescontoAplicado = valorOrcamento - (valorOrcamento * 0.05);
-
         orcamento.setValor(valorDescontoAplicado);
+
         carrinhoService.orcamento = orcamento;
+        descontoAplicado = true;
     }
 
     @Override
