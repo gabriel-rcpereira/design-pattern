@@ -4,7 +4,7 @@ import com.design.patterns.um.state.um.exception.OperacaoNaoPermitadaRuntimeExce
 import com.design.patterns.um.state.um.model.Orcamento;
 import com.design.patterns.um.state.um.service.CarrinhoService;
 
-public class StateMain {
+public class StateUmMain {
 
     public static void main(String[] args){
         Orcamento orcamento = new Orcamento(500.0);
