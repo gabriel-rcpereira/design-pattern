@@ -1,7 +1,6 @@
 package com.design.patterns.um.state.um.service;
 
 import com.design.patterns.um.state.um.exception.OperacaoNaoPermitadaRuntimeException;
-import com.design.patterns.um.state.um.model.Orcamento;
 
 public class Finalizado implements EstadoCarrinho {
 
