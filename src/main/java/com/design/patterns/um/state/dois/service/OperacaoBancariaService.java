@@ -27,4 +27,8 @@ public class OperacaoBancariaService {
     public double getSaldoAtualContaBancaria(){
         return contaBancaria.getSaldo();
     }
+
+    public String getEstadoContaBancaria() {
+        return this.estadoContaBancaria.toString();
+    }
 }

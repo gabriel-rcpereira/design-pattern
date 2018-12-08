@@ -1,11 +1,15 @@
 package com.design.patterns.um.state.dois.service;
 
-import com.design.patterns.um.state.dois.exception.SaqueNaoPermitidoRuntimeException;
 import com.design.patterns.um.state.dois.model.ContaBancaria;
 
 public class EstadoNegativoContaBancaria implements EstadoContaBancaria {
 
     private ContaBancaria contaBancaria;
+    private CalcularOperacaoBancariaService calcularOperacaoBancariaService;
+
+    public EstadoNegativoContaBancaria(){
+        this.calcularOperacaoBancariaService = new CalcularOperacaoBancariaService();
+    }
 
     @Override
     public void sacar(OperacaoBancariaService operacaoBancariaService, double valor) {
@@ -20,38 +24,29 @@ public class EstadoNegativoContaBancaria implements EstadoContaBancaria {
     }
 
     private void sacarDinheiroConta(double valor) {
-        checarLimiteDisponivelParaSaque(valor);
+        this.calcularOperacaoBancariaService.checarLimiteDisponivelParaSaque(valor,
+                contaBancaria.getSaldo(),
+                contaBancaria.getLimiteChequeEspecial());
         setSaldoContaBancariaDepoisDoSaque(valor);
     }
 
-    private void setSaldoContaBancariaDepoisDoSaque(double valor) {
-        double saldoDepoisDoSaque = getCalculoDoSaldoDepoisDoSaque(valor, this.contaBancaria.getSaldo());
+    private void setSaldoContaBancariaDepoisDoSaque(double valorSaque) {
+        double saldoDepoisDoSaque = this.calcularOperacaoBancariaService.getCalculoDoSaldoDepoisDoSaque(valorSaque,
+                this.contaBancaria.getSaldo());
         this.contaBancaria.setSaldo(saldoDepoisDoSaque);
     }
 
-    private double getCalculoDoSaldoDepoisDoSaque(double valor, double saldo) {
-        return saldo - valor;
+    private void realizarDeposito(double valorDeposito, OperacaoBancariaService operacaoBancariaService) {
+        updateSaldoContaBancariaDepoisDeposito(valorDeposito);
+        setEstadoContaBancaria(operacaoBancariaService);
     }
 
-    private void checarLimiteDisponivelParaSaque(double valor) {
-        double limiteSaqueContaBancaria = getLimiteDisponivelSaqueContaBancaria();
-        if (valor > limiteSaqueContaBancaria) {
-            throw new SaqueNaoPermitidoRuntimeException();
-        }
+    private void updateSaldoContaBancariaDepoisDeposito(double valorDeposito) {
+        contaBancaria.setSaldo(contaBancaria.getSaldo() + getValorDepositadoDescontandoTarifa(valorDeposito));
     }
 
-    private double getLimiteDisponivelSaqueContaBancaria() {
-        return this.contaBancaria.getSaldo() + this.contaBancaria.getLimiteChequeEspecial();
-    }
-
-    private void realizarDeposito(double valor, OperacaoBancariaService operacaoBancariaService) {
-        ContaBancaria contaBancaria = this.contaBancaria;
-        contaBancaria.setSaldo(getValorDepositadoDescontandoTarifa(valor));
-        setContaBancariaEstaPositiva(operacaoBancariaService);
-    }
-
-    private void setContaBancariaEstaPositiva(OperacaoBancariaService operacaoBancariaService) {
-        if (!isSaldoPositivo(this.contaBancaria)){
+    private void setEstadoContaBancaria(OperacaoBancariaService operacaoBancariaService) {
+        if (!isSaldoPositivo()){
             return;
         }
         setEstadoPositivoContaBancaria(operacaoBancariaService);
@@ -61,7 +56,7 @@ public class EstadoNegativoContaBancaria implements EstadoContaBancaria {
         operacaoBancariaService.estadoContaBancaria = new EstadoPositivoContaBancaria();
     }
 
-    private boolean isSaldoPositivo(ContaBancaria contaBancaria) {
+    private boolean isSaldoPositivo() {
         return contaBancaria.getSaldo() > 0;
     }
 
