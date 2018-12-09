@@ -1,7 +1,5 @@
 package com.design.patterns.um.chainofresponsibility.dois.service;
 
-import com.design.patterns.um.chainofresponsibility.dois.model.Formato;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,7 @@ public class ConversorService {
     private static final String SEPARADOR_PORCENTO = "%";
 
     public ConversorService() {
-        this.linhas = new ArrayList<Object[]>();
+        this.linhas = new ArrayList<>();
     }
 
     private void appendLine(Object[] lines) {

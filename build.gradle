@@ -1,6 +1,18 @@
 group 'design-patterns'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+    }
+}
+
+apply plugin: "org.sonarqube"
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
@@ -14,5 +26,4 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.6'
-
 }
