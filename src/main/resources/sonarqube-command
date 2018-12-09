@@ -1,0 +1,1 @@
+gradlew sonarqube -Dsonar.projectKey=gabriel-rcpereira_design-patterns -Dsonar.organization=gabriel-rcpereira-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2ca0b724fde54905c31d688732201d11660af5b0
