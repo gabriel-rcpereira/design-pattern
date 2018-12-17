@@ -18,6 +18,7 @@ public class NotaFiscalBuilder {
     public String observacoes;
 
     public NotaFiscalBuilder() {
+        this.dataDeEmissao = LocalDate.now();
         this.itens = new ArrayList<>();
     }
 
@@ -36,7 +37,7 @@ public class NotaFiscalBuilder {
         return this;
     }
 
-    public NotaFiscalBuilder withItem(ItemDaNota itemDaNota){
+    public NotaFiscalBuilder with(ItemDaNota itemDaNota){
         this.itens.add(itemDaNota);
         this.valorBruto += itemDaNota.getValor();
         this.impostos += (itemDaNota.getValor() * 0.05);
