@@ -4,6 +4,7 @@ import com.design.patterns.um.observer.um.builder.ItemNotaFiscalBuilder;
 import com.design.patterns.um.observer.um.builder.NotaFiscalBuilder;
 import com.design.patterns.um.observer.um.model.NotaFiscal;
 import com.design.patterns.um.observer.um.service.EmailNotaFiscalService;
+import com.design.patterns.um.observer.um.service.MultiplicadorNotaFiscalService;
 import com.design.patterns.um.observer.um.service.NotaFiscalDaoService;
 import com.design.patterns.um.observer.um.service.NotaFiscalService;
 
@@ -32,6 +33,7 @@ public class ObserverUmMain {
         NotaFiscalService notaFiscalService = new NotaFiscalService();
         notaFiscalService.addComplementoNotaFiscalService(new EmailNotaFiscalService());
         notaFiscalService.addComplementoNotaFiscalService(new NotaFiscalDaoService());
+        notaFiscalService.addComplementoNotaFiscalService(new MultiplicadorNotaFiscalService(5.0));
         notaFiscalService.emitir(notaFiscal);
     }
 }
